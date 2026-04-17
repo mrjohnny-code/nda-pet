@@ -4,38 +4,35 @@ import DetailAside from "./aside/DetailAside";
 import DetailMain from "./main/DetailMain";
 
 import './DetailContent.scss'
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function DetailContent() {
-	const [selected, setSelected] = useState(null);
+	// const [selected, setSelected] = useState(null);
 	const [tree, setTree] = useState(folders);
 
-	useEffect(() => {
-		const findPathById = (items, targetId, parentPath = '') => {
-			for (let item of items) {
-				const currentPath = `${parentPath}/${item.id}`;
+	const findPathById = (items, targetId, parentPath = '') => {
+		for (let item of items) {
+			const currentPath = `${parentPath}/${item.id}`;
 
-				if(item.id === targetId) {
-					return currentPath;
-				}
-
-				if(item.children) {
-					const found = findPathById(item.children, targetId, currentPath);
-					if(found) return found;
-				}
+			if(item.id === targetId) {
+				return currentPath;
 			}
-			return null;
-		};
 
-		const path = findPathById(tree, 2);
-
-		if(path) {
-			setSelected({
-				type: 'folder',
-				path
-			});
+			if(item.children) {
+				const found = findPathById(item.children, targetId, currentPath);
+				if(found) return found;
+			}
 		}
-	}, []);
+		return null;
+	};
+
+	const initialPath = findPathById(folders, 2);
+
+	const [selected, setSelected] = useState(
+		initialPath
+			? { type: 'folder', path: initialPath }
+			: null
+	);
 
 	return (
 		<div className="container content__container">

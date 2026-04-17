@@ -1,0 +1,21 @@
+.nda__aside {
+	// display: flex;
+
+	@media screen and (max-width: 992px){
+		flex-direction: column;
+	}
+
+	.nda__aside_inner {
+		width: 100%;
+		max-width: 377px;
+		margin-right: 40px;
+
+		@media screen and (max-width: 992px){
+			display: contents;
+		}
+	}
+
+	.nda__main {
+		width: 100%;
+	}
+}// /.nda__container
